@@ -1,0 +1,30 @@
+<h1>Register</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li style="color:red;font-size:5em;">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+<hr>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.first.label }} <br>
+        {{ form.first(size=40) }}
+    </p> 
+    <p>
+        {{ form.last.label }} <br>
+        {{ form.last(size=40) }}
+    </p> 
+    <p>
+        {{ form.student_id.label }} <br>
+        {{ form.student_id(size=32) }}
+    </p> 
+    <p>{{ form.submit() }}</p>
+    
+</form>

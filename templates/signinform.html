@@ -1,0 +1,24 @@
+<h1>Sign In</h1>
+<p>Please make sure you have an active cursor in the text entry box.</p>
+<p>Wait to make sure that your signin is processed correctly!</p>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+<hr>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.student_id.label }} <br>
+        {{ form.student_id(size=32) }}
+    </p> 
+    <p>{{ form.submit() }}</p>
+    
+</form>
