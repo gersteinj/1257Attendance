@@ -5,19 +5,20 @@ from airtable import Airtable
 from app import config
 import datetime
 
-attendance = Airtable(config.TEST_BASE_ID, 'Improved Attendance')
-membertable = Airtable(config.TEST_BASE_ID, 'Member Info')
+attendance = Airtable(config.PROD_BASE_ID, 'Improved Attendance')
+membertable = Airtable(config.PROD_BASE_ID, 'Member Info')
+DATE_COLUMN = "11/25"
 
-def get_record_id_by_student_id(student_id):
-    record = attendance.search('Student ID', student_id)
-    return record[0]['id']
+# def get_record_id_by_student_id(student_id):
+#     record = attendance.search('Student ID', student_id)
+#     return record[0]['id']
 
 # def get_member_id_by_student_id(student_id):
 #     record = membertable.search('Student ID', student_id)
 #     return record[0]['id']
 
 def at_sign_in(student_id, column='unset'):
-    record_id = get_record_id_by_student_id(student_id)
+    record_id = attendance.match('Student ID', student_id)['id']
     attendance.update(record_id, fields={column:'Present'})
 
 # def get_student_info(student_id):
@@ -38,7 +39,7 @@ def signin():
     if form.validate_on_submit():
         student_id = form.student_id.data
         try:
-            at_sign_in(student_id, column='unset')
+            at_sign_in(student_id, column=DATE_COLUMN)
             flash(f"Okay, I'll sign in user {student_id}")
             with open('scans.csv', 'a') as f:
                 f.write(f"{datetime.datetime.now()},{student_id},-,-\n")
