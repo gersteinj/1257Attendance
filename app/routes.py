@@ -5,15 +5,25 @@ from airtable import Airtable
 from app import config
 import datetime
 
-at = Airtable(config.BASE_ID, 'Improved Attendance')
+attendance = Airtable(config.TEST_BASE_ID, 'Improved Attendance')
+membertable = Airtable(config.TEST_BASE_ID, 'Member Info')
 
 def get_record_id_by_student_id(student_id):
-    record = at.search('Student ID', student_id)
+    record = attendance.search('Student ID', student_id)
     return record[0]['id']
+
+# def get_member_id_by_student_id(student_id):
+#     record = membertable.search('Student ID', student_id)
+#     return record[0]['id']
 
 def at_sign_in(student_id, column='unset'):
     record_id = get_record_id_by_student_id(student_id)
-    at.update(record_id, fields={column:'Present'})
+    attendance.update(record_id, fields={column:'Present'})
+
+# def get_student_info(student_id):
+#     record_id = get_member_id_by_student_id(student_id)
+#     return membertable.get(record_id)
+    
 
 @app.route('/')
 def index():
@@ -48,3 +58,9 @@ def register():
             f.write(f"{datetime.datetime.now()},{student_id},{form.first.data},{form.last.data}\n")
         return redirect('/signin')
     return render_template('registerform.html', form=form)
+
+# @app.route('/memberinfo/<int:student_id>')
+# def memberinfo(student_id):
+#     # return get_student_info(student_id)
+#     member = membertable.match('Student ID', student_id)
+#     return member
