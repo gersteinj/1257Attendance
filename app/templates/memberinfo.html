@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    <li>Name: {{ member['Full Name'] }}</li>
+    <li>Email: {{ member['School Email Address'] }}</li>
+    <li>School: {{ member['School'] }}</li>
+    <li>Emergency Card: {{ member['Emergency Card'] }}</li>
+</ul>
+{{ member }}
+{% endblock content %}
