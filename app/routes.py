@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app.forms import SignInForm, RegisterForm
 from airtable import Airtable
 from app import config
@@ -35,14 +35,14 @@ def signin():
             return redirect(url_for('signin'))
         except:
             flash('No such user!')
-            return redirect(url_for('register'))
+            return redirect(url_for('register', student_id=student_id))
     return render_template('signinform.html', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        student_id = form.student_id.data
+        student_id = request.args['student_id']
         flash(f"Stored info for {form.first.data} {form.last.data} (student id: {student_id}) so you can scan in next time")
         with open('scans.csv', 'a') as f:
             f.write(f"{datetime.datetime.now()},{student_id},{form.first.data},{form.last.data}\n")

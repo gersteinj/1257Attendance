@@ -9,7 +9,7 @@ class SignInForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class RegisterForm(FlaskForm):
-    student_id = StringField('Student ID', validators=[DataRequired()])
+    # student_id = StringField('Student ID', validators=[DataRequired()])
     first = StringField('First Name', validators=[DataRequired()])
     last = StringField('Last Name', validators=[DataRequired()])
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Register')
