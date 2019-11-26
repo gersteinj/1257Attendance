@@ -20,7 +20,10 @@ DATE_COLUMN = "unset"
 def at_sign_in(student_id, column):
     record_id = attendance.match('Student ID', student_id)['id']
     attendance.update(record_id, fields={column:'Present'})
-    
+
+def get_member_data(student_id):
+    member_data = membertable.match('Student ID', student_id)    
+    return member_data['fields']
 
 @app.route('/')
 def index():
@@ -34,9 +37,11 @@ def signin():
     form = SignInForm()
     if form.validate_on_submit():
         student_id = form.student_id.data
+
         try:
             at_sign_in(student_id, column=DATE_COLUMN)
-            flash(f"Okay, I'll sign in user {student_id}")
+            member_data = get_member_data(student_id)
+            flash(f"Hi {member_data['Full Name']}. I'm signing you in")
             with open('scans.csv', 'a') as f:
                 f.write(f"{datetime.datetime.now()},{student_id},-,-\n")
             return redirect(url_for('signin'))
