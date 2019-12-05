@@ -7,7 +7,7 @@ import datetime
 
 attendance = Airtable(config.PROD_BASE_ID, 'Improved Attendance')
 membertable = Airtable(config.PROD_BASE_ID, 'Member Info')
-DATE_COLUMN = "11/25"
+DATE_COLUMN = "12/05"
 
 # def get_record_id_by_student_id(student_id):
 #     record = attendance.search('Student ID', student_id)
